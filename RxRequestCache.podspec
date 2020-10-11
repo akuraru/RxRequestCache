@@ -22,21 +22,14 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://github.com/akuraru/RxRequestCache'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'akuraru' => 'akuraru@gmail.com' }
   s.source           = { :git => 'https://github.com/akuraru/RxRequestCache.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://twitter.com/akuraru'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'RxRequestCache/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'RxRequestCache' => ['RxRequestCache/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'CryptoKit'
+  s.dependency 'RxSwift'
 end

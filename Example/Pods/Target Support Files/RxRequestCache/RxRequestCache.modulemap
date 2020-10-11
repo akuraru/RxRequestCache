@@ -1,0 +1,6 @@
+framework module RxRequestCache {
+  umbrella header "RxRequestCache-umbrella.h"
+
+  export *
+  module * { export * }
+}

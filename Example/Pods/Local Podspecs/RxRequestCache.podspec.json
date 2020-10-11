@@ -1,0 +1,28 @@
+{
+  "name": "RxRequestCache",
+  "version": "0.1.0",
+  "summary": "A short description of RxRequestCache.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/akuraru/RxRequestCache",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "akuraru": "akuraru@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/akuraru/RxRequestCache.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "RxRequestCache/Classes/**/*",
+  "frameworks": "CryptoKit",
+  "dependencies": {
+    "RxSwift": [
+
+    ]
+  }
+}

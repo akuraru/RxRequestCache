@@ -1,11 +1,12 @@
+platform :ios, '13.0'
+
 use_frameworks!
 
 target 'RxRequestCache_Example' do
   pod 'RxRequestCache', :path => '../'
+  pod 'RxCocoa'
 
   target 'RxRequestCache_Tests' do
     inherit! :search_paths
-
-    pod 'FBSnapshotTestCase' , '~> 2.1.4'
   end
 end
