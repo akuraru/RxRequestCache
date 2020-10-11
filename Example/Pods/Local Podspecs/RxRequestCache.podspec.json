@@ -1,8 +1,8 @@
 {
   "name": "RxRequestCache",
   "version": "0.1.0",
-  "summary": "A short description of RxRequestCache.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "RxRequestCache is a framework for caching the results of URLRequest",
+  "description": "RxRequestCache is a framework for caching the results of URLRequest.\nRxRequestCache can be File Cacha.",
   "homepage": "https://github.com/akuraru/RxRequestCache",
   "license": {
     "type": "MIT",
@@ -15,14 +15,17 @@
     "git": "https://github.com/akuraru/RxRequestCache.git",
     "tag": "0.1.0"
   },
+  "social_media_url": "https://twitter.com/akuraru",
   "platforms": {
     "ios": "13.0"
   },
-  "source_files": "RxRequestCache/Classes/**/*",
+  "swift_versions": "5.0",
+  "source_files": "Sources/RxRequestCache/*",
   "frameworks": "CryptoKit",
   "dependencies": {
     "RxSwift": [
 
     ]
-  }
+  },
+  "swift_version": "5.0"
 }

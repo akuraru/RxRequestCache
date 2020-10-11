@@ -8,18 +8,13 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RxRequestCache'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of RxRequestCache.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.version          = '0.1.1'
+  s.summary          = 'RxRequestCache is a framework for caching the results of URLRequest'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  RxRequestCache is a framework for caching the results of URLRequest.
+  RxRequestCache can be File Cacha.
+  DESC
 
   s.homepage         = 'https://github.com/akuraru/RxRequestCache'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -28,8 +23,9 @@ TODO: Add long description of the pod here.
   s.social_media_url = 'https://twitter.com/akuraru'
 
   s.ios.deployment_target = '13.0'
+  s.swift_version = '5.0'
 
-  s.source_files = 'RxRequestCache/Classes/**/*'
+  s.source_files = 'Sources/RxRequestCache/*'
   s.frameworks = 'CryptoKit'
   s.dependency 'RxSwift'
 end
