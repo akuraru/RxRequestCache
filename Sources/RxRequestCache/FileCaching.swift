@@ -42,7 +42,7 @@ public class FileCaching<R: CacheKey>: Caching {
                         }
                     }
                     try manager.removeItem(at: url)
-                    observer.onError(NSError(domain: "clinet", code: 400, userInfo: nil))
+                    observer.onError(NSError(domain: "caching", code: 400, userInfo: nil))
                 } catch let error {
                     observer.onError(error)
                 }
