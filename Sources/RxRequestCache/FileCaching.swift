@@ -2,26 +2,24 @@ import Foundation
 import RxSwift
 import CryptoKit
 
-public class FileCaching<R: CacheKey>: Caching {
+public class FileCaching<R: CacheKey, E: Codable>: Caching {
     public typealias Request = R
+    public typealias Element = E
     
     let interval: TimeInterval
-    let isExpired: (Data) -> Bool
     let queue = DispatchQueue.global()
     
-    public init(interval: TimeInterval = .infinity, isExpired: @escaping (Data) -> Bool = {_ in false }) {
+    public init(interval: TimeInterval = .infinity) {
         self.interval = interval
-        self.isExpired = isExpired
     }
     
     func key(request: Request) -> String {
         SHA256.hash(data: request.data()).compactMap { String(format: "%02x", $0) }.joined()
     }
     
-    public func load(request: R) -> Observable<Data> {
+    public func load(request: R) -> Observable<Element> {
         let key = self.key(request: request)
         let interval = self.interval
-        let isExpired = self.isExpired
         
         return .create { (observer) in
             self.queue.async {
@@ -35,8 +33,9 @@ public class FileCaching<R: CacheKey>: Caching {
                         let i = Date().timeIntervalSince(creationDate)
                         if i < interval {
                             let data = try Data(contentsOf: url)
-                            if !isExpired(data) {
-                                observer.onNext(data)
+                            let expiring = try JSONDecoder().decode(Expiring<E>.self, from: data)
+                            if Date() < expiring.expiredAt {
+                                observer.onNext(expiring.t)
                                 return
                             }
                         }
@@ -51,13 +50,14 @@ public class FileCaching<R: CacheKey>: Caching {
         }
     }
     
-    public func save(request: R, data: Data) {
+    public func save(request: R, expiring: Expiring<E>) {
         let key = self.key(request: request)
         queue.async {
             let manager = FileManager()
             do {
                 var url = try manager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                 url.appendPathComponent(key)
+                let data = try JSONEncoder().encode(expiring)
                 try data.write(to: url)
             } catch _ {
             }

@@ -5,40 +5,41 @@ public protocol CacheKey {
     func data() -> Data
 }
 
-public protocol Client {
-    associatedtype Request
-    associatedtype Element
+public class Expiring<T: Codable>: Codable {
+    public let t: T
+    public let expiredAt: Date
     
-    func fetch(request: Request) -> Observable<Data>
-    func parse(data: Data) -> Observable<Element>
+    public init(t: T, expiredAt: Date = Date(timeIntervalSinceReferenceDate: .greatestFiniteMagnitude)) {
+        self.t = t
+        self.expiredAt = expiredAt
+    }
 }
 
-public class Cache<Request: CacheKey, Element> {
-    public static func create(
+public class Cache {
+    public static func create<Request: CacheKey, Element:Codable> (
         request: Request,
-        load: (Request) -> Observable<Data>,
-        parse: @escaping (Data) -> Observable<Element>,
-        fetch: @escaping (Request) -> Observable<Data>,
-        save: @escaping (Request, Data) -> ()
+        load: (Request) -> Observable<Element>,
+        fetch: @escaping (Request) -> Observable<Expiring<Element>>,
+        save: @escaping (Request, Expiring<Element>) -> ()
     ) -> Observable<Element> {
-        return load(request).flatMap(parse).catchError { _ in
-            return fetch(request).flatMap { data in
-                return parse(data).do(onNext: {_ in save(request, data) })
+        return load(request).catchError { _ in
+            return fetch(request).map { data in
+                save(request, data)
+                return data.t
             }
         }
     }
     
-    public static func create<Ca: Caching, Cl: Client> (
+    public static func create<Request: CacheKey, Element: Codable, Ca: Caching> (
         request: Request,
         caching: Ca,
-        client: Cl
-    ) -> Observable<Element> where Ca.Request == Request, Cl.Request == Request, Cl.Element == Element {
-        return self.create(
+        fetch: @escaping (Request) -> Observable<Expiring<Element>>
+    ) -> Observable<Element> where Ca.Request == Request, Ca.Element == Element {
+        create(
             request: request,
             load: caching.load(request:),
-            parse: client.parse(data:),
-            fetch: client.fetch(request:),
-            save: caching.save(request:data:)
+            fetch: fetch,
+            save: caching.save(request:expiring:)
         )
     }
 }

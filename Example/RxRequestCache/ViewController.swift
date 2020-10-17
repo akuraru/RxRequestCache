@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         Cache.create(
             request: GithubRequest(path: "/users/akuraru/repos"),
             caching: FileCaching(),
-            client: GithubClient()
+            fetch: GithubClient().fetch(request:)
         )
     }
 }
@@ -40,17 +40,15 @@ struct GithubRequest: CacheKey {
     }
 }
 
-class GithubClient: Client {
+class GithubClient {
     public typealias Request = GithubRequest
     public typealias Element = [Repository]
     
-    func fetch(request: Request) -> Observable<Data> {
+    func fetch(request: Request) -> Observable<Expiring<Element>> {
         let request = URLRequest(url: URL(string: "https://api.github.com" + request.path)!)
-        return URLSession.shared.rx.data(request: request)
-    }
-    
-    func parse(data: Data) -> Observable<Element> {
-        Observable.just(try! JSONDecoder().decode([Repository].self, from: data))
+        return URLSession.shared.rx.data(request: request).map { data in
+            Expiring(t: try! JSONDecoder().decode([Repository].self, from: data))
+        }
     }
 }
 

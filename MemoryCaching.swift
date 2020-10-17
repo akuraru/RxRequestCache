@@ -1,8 +1,11 @@
 import RxSwift
 import UIKit
 
-class MemoryCaching: Caching {
-    var memory = [Data: Data]()
+class MemoryCaching<R: CacheKey, E: Codable>: Caching {
+    public typealias Request = R
+    public typealias Element = E
+    
+    var memory = [Data: Expiring<E>]()
     let queue = DispatchQueue.global()
     
     init() {
@@ -18,13 +21,13 @@ class MemoryCaching: Caching {
         self.memory = [:]
     }
     
-    func load(request: CacheKey) -> Observable<Data> {
+    func load(request: R) -> Observable<E> {
         let queue = self.queue
         return Observable.create { [weak self] observer in
             queue.async {[weak self] in
                 let key = request.data()
-                if let data = self?.memory[key] {
-                    observer.onNext(data)
+                if let data = self?.memory[key], Date() < data.expiredAt {
+                    observer.onNext(data.t)
                 } else {
                     observer.onError(NSError(domain: "caching", code: 400, userInfo: nil))
                 }
@@ -33,10 +36,10 @@ class MemoryCaching: Caching {
         }
     }
     
-    func save(request: CacheKey, data: Data) {
+    func save(request: R, expiring: Expiring<E>) {
         queue.async {[weak self] in
             let key = request.data()
-            self?.memory[key] = data
+            self?.memory[key] = expiring
         }
     }
 }
