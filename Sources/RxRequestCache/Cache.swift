@@ -30,7 +30,7 @@ public class Cache {
         }
     }
     
-    public static func create<Request: CacheKey, Element: Codable, Ca: Caching> (
+    public static func create<Request, Element, Ca: Caching> (
         request: Request,
         caching: Ca,
         fetch: @escaping (Request) -> Observable<Expiring<Element>>
