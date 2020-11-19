@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		007F528031948DC356FFB4D6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		2B5AF8FCB54F68A429C121BC /* RxRequestCache.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RxRequestCache.podspec; path = ../RxRequestCache.podspec; sourceTree = "<group>"; };
+		2B5AF8FCB54F68A429C121BC /* RxRequestCache.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RxRequestCache.podspec; path = ../RxRequestCache.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3C2927488DC4DC0C5DA50057 /* Pods-RxRequestCache_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxRequestCache_Example.debug.xcconfig"; path = "Target Support Files/Pods-RxRequestCache_Example/Pods-RxRequestCache_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		3E077F062518D908D53C6820 /* Pods-RxRequestCache_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxRequestCache_Example.release.xcconfig"; path = "Target Support Files/Pods-RxRequestCache_Example/Pods-RxRequestCache_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* RxRequestCache_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxRequestCache_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };

@@ -42,4 +42,11 @@ class MemoryCaching<R: CacheKey, E: Codable>: Caching {
             self?.memory[key] = expiring
         }
     }
+    
+    func remove(request: R) {
+        queue.async {[weak self] in
+            let key = request.data()
+            self?.memory[key] = nil
+        }
+    }
 }

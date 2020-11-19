@@ -63,4 +63,15 @@ public class FileCaching<R: CacheKey, E: Codable>: Caching {
             }
         }
     }
+    
+    public func remove(request: R) {
+        let key = self.key(request: request)
+        let manager = FileManager()
+        do {
+            var url = try manager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            url.appendPathComponent(key)
+            try manager.removeItem(at: url)
+        } catch _ {
+        }
+    }
 }
